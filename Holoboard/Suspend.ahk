@@ -1,7 +1,6 @@
 #SuspendExempt
-NumpadSub::Suspend ; Win + NumpadSub
+NumpadSub::Suspend ; NumpadSub
 #SuspendExempt False
-
 
 a::{
     Send "{b}"
