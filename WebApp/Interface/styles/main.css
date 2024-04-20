@@ -35,11 +35,10 @@ body * {
     background-color: rgb(197, 197, 197);
     border-radius: 10px;
     display: grid;
-    grid-template-columns: repeat(30, 30px);
+    grid-template-columns: repeat(auto-fit, minmax(30px, 1fr)); /* Responsive grid layout */
     grid-template-rows: repeat(5, 60px);
     grid-gap: 5px;
 }
-
 
 .key {
     background-color: rgb(243, 243, 243);
