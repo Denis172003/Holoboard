@@ -92,7 +92,12 @@ body * {
     grid-column: span 3;
 }
 
-.command {
+.leftCommand {
+    grid-column: span 3;
+    font-size: 14px;
+}
+
+.rightCommand {
     grid-column: span 3;
     font-size: 14px;
 }

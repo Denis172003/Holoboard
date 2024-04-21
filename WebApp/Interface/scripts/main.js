@@ -1,15 +1,36 @@
 // Get all key elements
 const keyElements = document.querySelectorAll('.key');
 
+async function fetchKeyData(keyName) {
+    try {
+        const response = await fetch(`/api/keys/${keyName}`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch key data');
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching key data:', error.message);
+    }
+}
+
 // Iterate over each key element
 keyElements.forEach(function(keyElement) {
     // Add click event listener to the key element
-    keyElement.addEventListener('click', function() {
+    keyElement.addEventListener('click', async function() {
         // Get the current image source and functionality
-        const currentImage = keyElement.querySelector('img').src;
-        let currentFunctionality = ''; // Placeholder for current functionality, you can update this based on your actual implementation
-
+        const keyName = keyElement.id; // Get the id of the key
+        const keyData = await fetchKeyData(keyName); // Fetch data for the key from the database
         // Create a modal or small window to display the current image and functionality
+
+        if (!keyData) {
+            console.error('Key data not found');
+            return;
+        }
+
+        const currentImage = keyData.image_url; // Get the image URL from the fetched data
+        let currentFunctionality = keyData.functionality || ''; // Get the functionality from the fetched data, default to empty string if null
+
         const modalContent = `
             <div class="modal">
                 <div class="modal-content">
@@ -54,16 +75,3 @@ keyElements.forEach(function(keyElement) {
         });
     });
 });
-
-changeFunctionalityBtn.addEventListener('click', function() {
-    // Prompt the user to enter new functionality text
-    const newFunctionality = prompt('Enter the new functionality:', currentFunctionality);
-
-    // Update the functionality text if the user provided new texts
-    if (newFunctionality !== null && newFunctionality !== '') {
-        currentFunctionality = newFunctionality;
-        // Update the functionality text in the modal
-        document.querySelector('.modal-content p').textContent = currentFunctionality;
-    }
-});
-
